@@ -11,6 +11,7 @@ before_action :correct_user, only: [:edit, :update]
   def index
     @books = Book.all
     @book = Book.new
+    
   end
 
   def create
