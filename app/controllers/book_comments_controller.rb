@@ -1,9 +1,9 @@
 class BookCommentsController < ApplicationController
   def create
     @book = Book.find(params[:book_id])
-    @book_comment = current_user.book_comments.new(book_comment_params)
-    @book_comment.book_id = @book.id
-    @user = @book.user
+    @book_comment = current_user.book_comments.new(book_comment_params) # <= comment = BookComment.new(book_comment_params)
+    @book_comment.book_id = @book.id                                    #    comment.user_id = current_user.id
+    @user = @book.user                                                  # 同じ意味になる
     if @book_comment.save
      redirect_to book_path(@book)
     else
