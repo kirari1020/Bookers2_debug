@@ -7,15 +7,9 @@
       <%= render 'books/form', book: @book_new %>
     </div>
     <div class='col-md-8 offset-md-1'>
-         <% if @book_comment.errors.any? %>
-          <div class="alert alert-warning">
-            <ul>
-              <% @book_comment.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-         <% end %>
+
+       <div id="comments_error"><%= render 'layouts/errors', obj: @book_comment %></div>
+
   		<h2>Book detail</h2>
   		<table class='table'>
   		  <tr>
@@ -28,7 +22,8 @@
           <td><%= @book.body %></td>
 
          <!--ここにいいね機能の部分テンプレート入れる-->
-         <%= render 'favorites/favorite-btn', book: @book %>
+
+          <td class="favorite-btn_<%= @book.id %>"><%= render 'favorites/favorite-btn', book: @book %></td>
 
          <td>コメント数：<%= @book.book_comments.count %></td>
           <% if @book.user_id == current_user.id %>
@@ -39,12 +34,12 @@
       </table>
 
           <!--ここにコメント一覧一覧の部分テンプレート入れる-->
-         <%= render 'book_comments/book_comment', book: @book %>
+         <div class="book_comments"><%= render 'book_comments/book_comment', book: @book %></div>
 
-          <%= form_with(model:[@book, @book_comment], local: true) do |f| %>
+          <%= form_with model:[@book, @book_comment] do |f| %>
             <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに", class: 'form-control' %></br>
             <%= f.submit "送信する" %>
           <% end %>
-    </div>
+     </div>
   </div>
 </div>
